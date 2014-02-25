@@ -9,7 +9,6 @@ CFLAGS_KMOD = \
 	-Wall \
 	-nostdinc \
 	-mkernel \
-	-fno-builtin-printf \
 	-D_KERNEL \
 	-DKERNEL \
 	-DKERNEL_PRIVATE \

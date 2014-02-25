@@ -99,7 +99,6 @@ void *
 zfs_kmem_alloc(size_t size, int kmflags)
 {
 	void *p = NULL;
-    kern_return_t kr;
 
     if (!size) return NULL; // FIXME
 
@@ -107,16 +106,13 @@ zfs_kmem_alloc(size_t size, int kmflags)
     if (size < PAGE_SIZE)
         p = OSMalloc(size, zfs_kmem_alloc_tag);
     else
-        kr = kmem_alloc(kernel_map,
+        kern_return_t kr = kmem_alloc(kernel_map,
                         (vm_offset_t *)&p,
                         size);
 
 #else
     p = OSMalloc(size, zfs_kmem_alloc_tag);
 #endif
-
-
-
 
 
     if (p && (kmflags & KM_ZERO))
@@ -127,6 +123,7 @@ zfs_kmem_alloc(size_t size, int kmflags)
     } else {
         atomic_add_64(&total_in_use, size);
     }
+    
 	return (p);
 }
 
