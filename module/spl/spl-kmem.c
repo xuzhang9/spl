@@ -172,6 +172,7 @@ kmem_avail(void)
 int spl_vm_pool_low(void)
 {
     int r = vm_pool_low();
+    bmalloc_garbage_collect();
     if(r) {
        bmalloc_release_memory();
     }
